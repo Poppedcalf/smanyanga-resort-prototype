@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samanyanga Resort – Kariba (Concept Prototype)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0a2252; --lake:#123f8c; --shallows:#7fb4b0; --mist:#eaf0fa;
+  --gold:#e8a735; --gold-d:#b9791a; --bark:#4a3826; --white:#fbfcfb; --ink:#14201f;
+  --serif:'Young Serif',Georgia,serif; --sans:'Figtree',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);background:var(--white);line-height:1.55;font-size:17px;-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.wrap{width:min(1080px,100% - 32px);margin-inline:auto}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.1}
+h2{font-size:clamp(1.9rem,6vw,2.9rem);margin-bottom:.6em;max-width:16ch}
+p{max-width:60ch}
+section{padding:72px 0}
+
+/* top bar */
+.bar{position:absolute;inset:0 0 auto 0;z-index:5;padding:16px 0;color:#fff}
+.bar .wrap{display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:var(--serif);font-size:1.25rem;text-decoration:none;display:flex;gap:10px;align-items:center}
+.bar nav{display:none;gap:26px;font-weight:500;font-size:.95rem}
+.bar nav a{text-decoration:none;opacity:.9}
+.bar nav a:hover{opacity:1;text-decoration:underline;text-underline-offset:6px}
+@media(min-width:760px){.bar nav{display:flex}}
+
+/* hero */
+.hero{position:relative;min-height:100svh;color:#fff;display:flex;align-items:flex-end;overflow:hidden;
+  background:linear-gradient(180deg,#0a2252 0%,#1a3f86 28%,#c9803a 62%,#f0b957 70%,#123f8c 70.2%,#0a2a66 100%)}
+.hero::before{content:"";position:absolute;inset:0 0 auto 0;height:34%;background:linear-gradient(180deg,rgba(6,22,54,.65),transparent);z-index:1;pointer-events:none}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:60%;background:linear-gradient(180deg,transparent,rgba(6,22,54,.7) 62%);pointer-events:none}
+@media(max-width:759px){.hero{background:var(--night)}}
+.hero .wrap{position:relative;z-index:2;padding:0 0 88px}
+.hero h1{font-size:clamp(2.6rem,11vw,6rem);max-width:11ch;margin-bottom:.35em;text-shadow:0 2px 24px rgba(13,42,48,.5)}
+.hero p{font-size:1.15rem;color:#f3efe6;margin-bottom:28px;text-shadow:0 1px 12px rgba(13,42,48,.6)}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 24px;border-radius:999px;font:600 1rem var(--sans);text-decoration:none;border:2px solid transparent;cursor:pointer}
+.btn.gold{background:var(--gold);color:var(--night)}
+.btn.gold:hover{background:#f2b94d}
+.btn.ghost{border-color:rgba(255,255,255,.7);color:#fff}
+.btn.ghost:hover{background:rgba(255,255,255,.12)}
+
+/* amenities */
+.amen{background:var(--mist);padding:40px 0}
+.amen ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:22px 12px}
+@media(min-width:760px){.amen ul{grid-template-columns:repeat(6,1fr)}}
+.amen li{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;font-weight:600;font-size:.95rem}
+.amen svg{width:34px;height:34px;stroke:var(--lake);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* rooms */
+.tabs{display:flex;gap:8px;margin:8px 0 24px}
+.tabs button{flex:1;max-width:150px;min-height:48px;border-radius:12px;border:2px solid var(--lake);background:none;color:var(--lake);font:600 1rem var(--sans);cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--lake);color:#fff}
+.room{display:none;grid-gap:24px}
+.room.on{display:grid}
+@media(min-width:760px){.room.on{grid-template-columns:1.2fr 1fr;align-items:center}}
+.room .pic{aspect-ratio:4/3;border-radius:20px;overflow:hidden;background:linear-gradient(160deg,var(--shallows),var(--lake));position:relative}
+.badge{display:inline-block;background:var(--gold);color:var(--night);font-weight:700;font-size:.85rem;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+.room h3{font-size:1.8rem;margin-bottom:6px}
+.room ul{padding-left:1.1em;margin:14px 0 20px}
+.room li{margin:4px 0}
+.rate{font-weight:700;color:var(--gold-d);margin-bottom:16px}
+
+/* lake highlights */
+.lake-sec{background:var(--night);color:#eaf2f0}
+.lake-sec h2{color:#fff}
+.facts{display:grid;gap:28px;margin-top:36px}
+@media(min-width:760px){.facts{grid-template-columns:repeat(3,1fr)}}
+.facts h3{font-size:1.35rem;color:var(--gold);margin-bottom:6px}
+.facts p{color:#c4d6d3}
+
+/* gallery */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.grid button{border:0;padding:0;border-radius:14px;overflow:hidden;cursor:zoom-in;aspect-ratio:1;background:none;position:relative}
+.grid button:nth-child(1){grid-column:span 2;aspect-ratio:2/1}
+.grid button:nth-child(6),.grid button:nth-child(7),.grid button:nth-child(8){grid-column:span 2;aspect-ratio:2/1}
+@media(min-width:760px){.grid{grid-template-columns:repeat(4,1fr)}}
+.grid div{width:100%;height:100%;background:linear-gradient(135deg,var(--shallows),var(--lake));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600}
+.grid .cap{position:absolute;left:10px;bottom:10px;background:var(--gold);color:var(--night);font:700 .8rem var(--sans);padding:4px 10px;border-radius:999px}
+
+/* reviews */
+.rev{background:var(--mist)}
+.quotes{display:grid;gap:16px;margin-top:20px}
+@media(min-width:760px){.quotes{grid-template-columns:repeat(3,1fr)}}
+.quotes blockquote{background:#fff;border-left:5px solid var(--gold);padding:20px;border-radius:0 14px 14px 0}
+.quotes cite{display:block;margin-top:10px;font-style:normal;font-weight:600;font-size:.9rem;color:#5b6b69}
+
+/* faq */
+details{border-bottom:1px solid #cfdad7;padding:18px 0;max-width:720px}
+summary{font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;min-height:28px}
+summary::after{content:"+";font-size:1.5rem;line-height:1;color:var(--lake);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin-top:10px}
+
+/* booking */
+.book{background:linear-gradient(160deg,var(--lake),var(--night));color:#fff}
+.book h2{color:#fff}
+form.enq{display:grid;gap:14px;max-width:520px;margin-top:24px}
+form.enq label{display:grid;gap:6px;font-weight:600;font-size:.95rem}
+form.enq input,form.enq select{min-height:50px;border-radius:12px;border:2px solid transparent;padding:0 14px;font:1rem var(--sans);background:#fff;color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.alt{margin-top:18px}
+.alt a{font-weight:600}
+
+footer{background:#061636;color:#9bb3b0;padding:36px 0 110px;font-size:.9rem}
+footer .logo{color:#fff;margin-bottom:10px}
+
+/* sticky whatsapp */
+.wa{position:fixed;right:16px;bottom:16px;z-index:20;display:flex;gap:10px}
+.wa a{display:flex;align-items:center;gap:10px;min-height:56px;padding:0 20px;border-radius:999px;background:#1fa855;color:#fff;font-weight:700;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.wa a.call{background:var(--night);width:56px;padding:0;justify-content:center}
+.wa svg{width:26px;height:26px;fill:#fff}
+.wa a.call svg{fill:none;stroke:#fff;stroke-width:2}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a href="#top" class="logo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M12 2v20"/></svg>
+      Samanyanga Resort
+    </a>
+    <nav>
+      <a href="#rooms">Accommodation</a>
+      <a href="#experience">Lake Kariba</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#faq">FAQ</a>
+      <a href="#book">Book Stay</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <h1>Where Lake Kariba Meets Luxury.</h1>
+    <p>Experience breath-taking sunsets, pristine wildlife views, and world-class hospitality on the shores of Lake Kariba, Zimbabwe.</p>
+    <div class="btns">
+      <a href="#book" class="btn gold">Check Availability & Rates</a>
+      <a href="#rooms" class="btn ghost">Explore Suites</a>
+    </div>
+  </div>
+</section>
+
+<div class="amen">
+  <div class="wrap">
+    <ul>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        Lakefront Views
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Infinity Pool
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+        Fine Dining
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg>
+        Boat Cruises
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Free High-Speed Wi-Fi
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Secure Parking
+      </li>
+    </ul>
+  </div>
+</div>
+
+<section id="rooms">
+  <div class="wrap">
+    <h2>Rooms & Lakeside Suites</h2>
+    <p>Designed for absolute relaxation with private balconies overlooking the tranquil waters of Kariba.</p>
+    
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" aria-controls="r1" onclick="switchTab(0)">Luxury Suite</button>
+      <button role="tab" aria-selected="false" aria-controls="r2" onclick="switchTab(1)">Executive Villa</button>
+      <button role="tab" aria-selected="false" aria-controls="r3" onclick="switchTab(2)">Family Lodge</button>
+    </div>
+
+    <div class="room on" id="r1">
+      <div class="pic"><div>Luxury Lake Suite View</div></div>
+      <div>
+        <span class="badge">Most Popular</span>
+        <h3>Panorama Luxury Suite</h3>
+        <p>Wake up to uninterrupted views of the lake. Features a king-sized bed, open-plan stone bathroom, air conditioning, and a private wooden viewing deck.</p>
+        <ul>
+          <li>King-sized extra-length bed</li>
+          <li>Private waterfront balcony</li>
+          <li>En-suite bathroom with soaking tub</li>
+          <li>Complimentary minibar & espresso bar</li>
+        </ul>
+        <div class="rate">From $180 / night</div>
+        <a href="#book" class="btn gold">Book This Suite</a>
+      </div>
+    </div>
+
+    <div class="room" id="r2">
+      <div class="pic"><div>Executive Villa Interior</div></div>
+      <div>
+        <span class="badge">Ultimate Privacy</span>
+        <h3>Executive Lakeside Villa</h3>
+        <p>Spacious, secluded stand-alone villa offering absolute luxury, featuring an indoor/outdoor lounge space and direct pathway access to the water.</p>
+        <ul>
+          <li>Private plunge pool & sun loungers</li>
+          <li>Dedicated butler service on request</li>
+          <li>Spacious indoor & outdoor lounge</li>
+          <li>Smart entertainment system</li>
+        </ul>
+        <div class="rate">From $320 / night</div>
+        <a href="#book" class="btn gold">Book This Villa</a>
+      </div>
+    </div>
+
+    <div class="room" id="r3">
+      <div class="pic"><div>Family Lodge Setup</div></div>
+      <div>
+        <span class="badge">Family Friendly</span>
+        <h3>Kariba Family Lodge</h3>
+        <p>Perfect for families or groups traveling together, offering multi-bedroom configurations, generous living spaces, and secure enclosed outdoor areas.</p>
+        <ul>
+          <li>Two en-suite bedrooms (Sleeps 4-5)</li>
+          <li>Expansive shared patio & dining table</li>
+          <li>Child-safe surroundings</li>
+          <li>Kitchenette & tea facilities</li>
+        </ul>
+        <div class="rate">From $290 / night</div>
+        <a href="#book" class="btn gold">Book This Lodge</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="lake-sec" id="experience">
+  <div class="wrap">
+    <h2>The Kariba Experience</h2>
+    <p>Immerse yourself in legendary African sunsets, abundant wildlife, and unforgettable excursions on the world's largest man-made reservoir.</p>
+    
+    <div class="facts">
+      <div>
+        <h3>Sunset Boat Cruises</h3>
+        <p>Cruise into the golden hour aboard our custom watercraft. Witness majestic fish eagles, hippos, and crimson skies over the water.</p>
+      </div>
+      <div>
+        <h3>Game Drives & Safaris</h3>
+        <p>Explore nearby parks and shoreline tracks with expert local guides to spot elephants, lions, and diverse bird species.</p>
+      </div>
+      <div>
+        <h3>World-Class Tiger Fishing</h3>
+        <p>Test your angling skills in waters renowned globally for fierce fighting tiger fish and unforgettable sport fishing adventures.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <h2>Resort Gallery</h2>
+    <p>A glimpse into your upcoming escape at Samanyanga.</p>
+    
+    <div class="grid" style="margin-top:24px">
+      <button><div>Resort Panorama View</div><span class="cap">Main Lodge</span></button>
+      <button><div>Infinity Pool at Dusk</div></button>
+      <button><div>Fine Dining Deck</div></button>
+      <button><div>Luxury Suite Interior</div></button>
+      <button><div>Sunset Cruise Experience</div></button>
+      <button><div>Wildlife Safari View</div><span class="cap">Kariba Fauna</span></button>
+      <button><div>Private Balcony Breakfast</div></button>
+    </div>
+  </div>
+</section>
+
+<section class="rev">
+  <div class="wrap">
+    <h2>Guest Reviews</h2>
+    <div class="quotes">
+      <blockquote>
+        "An absolute paradise! The sunset views from our suite were unmatched anywhere else in Kariba. Service and food were world-class."
+        <cite>— Sarah & Michael T., Harare</cite>
+      </blockquote>
+      <blockquote>
+        "The tiger fishing excursion organized by the resort was the highlight of our trip. Impeccable cleanliness and friendly staff."
+        <cite>— David K., Johannesburg</cite>
+      </blockquote>
+      <blockquote>
+        "Peaceful, luxurious, and deeply authentic. We cannot wait to return for our anniversary next year."
+        <cite>— Dr. Chipo M., Bulawayo</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2>Frequently Asked Questions</h2>
+    <div style="margin-top:20px">
+      <details>
+        <summary>What are the check-in and check-out times?</summary>
+        <p>Check-in is from 2:00 PM onwards, and check-out is by 10:30 AM. Early check-ins or late check-outs can be requested subject to availability.</p>
+      </details>
+      <details>
+        <summary>How do we get to Samanyanga Resort in Kariba?</summary>
+        <p>You can reach Kariba via a scenic drive from Harare or via scheduled/charter flights into Kariba Airport. Airport shuttle and private transfers can be arranged directly through our concierge.</p>
+      </details>
+      <details>
+        <summary>Are meals included in the room rates?</summary>
+        <p>Most rates include a full gourmet breakfast. Half-board and full-board packages covering lunch and dinner at our main lakeview restaurant are also available during booking.</p>
+      </details>
+      <details>
+        <summary>Is boat cruising and fishing booked on-site?</summary>
+        <p>Yes, our front desk and activity desk can arrange sunset boat cruises, fishing equipment, boat hire, and guided safaris at your convenience.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="book" id="book">
+  <div class="wrap">
+    <h2>Reserve Your Stay</h2>
+    <p>Fill out the quick inquiry form below or reach us instantly via WhatsApp to secure your dates.</p>
+    
+    <form class="enq" onsubmit="event.preventDefault(); alert('Inquiry sent successfully! Our reservations team will contact you shortly via WhatsApp or email.');">
+      <div class="two">
+        <label>Check-in Date <input type="date" required></label>
+        <label>Check-out Date <input type="date" required></label>
+      </div>
+      <div class="two">
+        <label>Select Room Type
+          <select>
+            <option>Panorama Luxury Suite ($180/night)</option>
+            <option>Executive Lakeside Villa ($320/night)</option>
+            <option>Kariba Family Lodge ($290/night)</option>
+          </select>
+        </label>
+        <label>Number of Guests
+          <select>
+            <option>1 Guest</option>
+            <option selected>2 Guests</option>
+            <option>3 Guests</option>
+            <option>4+ Guests (Family)</option>
+          </select>
+        </label>
+      </div>
+      <label>Your Name <input type="text" placeholder="e.g. Tendai Moyo" required></label>
+      <label>WhatsApp / Phone Number <input type="tel" placeholder="+263 77 ..." required></label>
+      <button type="submit" class="btn gold" style="width:100%; margin-top:6px;">Submit Reservation Inquiry</button>
+    </form>
+    
+    <div class="alt">
+      Need an immediate response? Chat with us directly on <a href="https://wa.me/263770000000" target="_blank" style="color:var(--gold);">WhatsApp</a>.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">Samanyanga Resort – Kariba</div>
+    <p>Lake Kariba, Mashonaland West Province, Zimbabwe<br>© 2026 Samanyanga Resort. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="wa">
+  <a href="tel:+263770000000" class="call" aria-label="Call Resort">
+    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </a>
+  <a href="https://wa.me/263770000000" target="_blank" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    Chat with Reservations
+  </a>
+</div>
+
+<script>
+function switchTab(idx) {
+  const btns = document.querySelectorAll('.tabs button');
+  const rooms = document.querySelectorAll('.room');
+  btns.forEach((b, i) => {
+    b.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+  });
+  rooms.forEach((r, i) => {
+    if(i === idx) {
+      r.classList.add('on');
+    } else {
+      r.classList.remove('on');
+    }
+  });
+}
+</script>
+
+</body>
+</html>
