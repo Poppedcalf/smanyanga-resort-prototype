@@ -1,0 +1,1 @@
+# smanyanga-resort-prototype
